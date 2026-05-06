@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小天使即将到来</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --lavender: #c4b5e0;
+    --lavender-light: #e8e0f3;
+    --mint: #a8d5c2;
+    --mint-light: #d4ede2;
+    --cream: #faf8f5;
+    --warm-gray: #6b6370;
+    --text-primary: #3d3644;
+    --text-secondary: #8a8090;
+    --white: #ffffff;
+    --shadow: rgba(100, 80, 120, 0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--cream);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Floating particles */
+  .particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: floatParticle linear infinite;
+  }
+
+  @keyframes floatParticle {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.3; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* Hero Section */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(160deg, var(--cream) 0%, var(--lavender-light) 50%, var(--mint-light) 100%);
+    padding: 2rem;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 1.2s ease-out;
+  }
+
+  .hero-icon {
+    font-size: 1.2rem;
+    letter-spacing: 1.5em;
+    color: var(--lavender);
+    margin-bottom: 2rem;
+    animation: sparkle 3s ease-in-out infinite;
+  }
+
+  @keyframes sparkle {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .hero .subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 3rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Countdown */
+  .countdown {
+    display: flex;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .countdown-number {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1;
+    min-width: 2.5ch;
+    text-align: center;
+    position: relative;
+  }
+
+  .countdown-number::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--lavender), transparent);
+  }
+
+  .countdown-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+  }
+
+  .countdown-separator {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--lavender);
+    align-self: flex-start;
+    padding-top: 0.2rem;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  .scroll-hint .arrow {
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(to bottom, var(--text-secondary), transparent);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Blessings Section */
+  .blessings {
+    padding: 6rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 4rem;
+    font-size: 0.95rem;
+  }
+
+  .blessing-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 20px var(--shadow);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blessing-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .blessing-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .blessing-card:nth-child(odd)::before { background: linear-gradient(to bottom, var(--lavender), var(--mint)); }
+  .blessing-card:nth-child(even)::before { background: linear-gradient(to bottom, var(--mint), var(--lavender)); }
+
+  .blessing-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    line-height: 2;
+    color: var(--text-primary);
+  }
+
+  .blessing-icon {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    font-size: 2.5rem;
+    opacity: 0.12;
+  }
+
+  /* Wish Wall Section */
+  .wish-wall {
+    padding: 6rem 2rem;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--lavender-light) 50%, var(--cream) 100%);
+    position: relative;
+    z-index: 1;
+  }
+
+  .wish-wall-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Wish Form */
+  .wish-form {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 30px var(--shadow);
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .wish-form.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-row input {
+    flex: 1;
+    padding: 0.85rem 1.2rem;
+    border: 1.5px solid var(--lavender-light);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--cream);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+  }
+
+  .form-row input:focus {
+    border-color: var(--lavender);
+    box-shadow: 0 0 0 3px rgba(196, 181, 224, 0.2);
+  }
+
+  .form-row input::placeholder { color: var(--text-secondary); opacity: 0.6; }
+
+  .wish-form textarea {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    border: 1.5px solid var(--lavender-light);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--cream);
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+    margin-bottom: 1rem;
+  }
+
+  .wish-form textarea:focus {
+    border-color: var(--lavender);
+    box-shadow: 0 0 0 3px rgba(196, 181, 224, 0.2);
+  }
+
+  .wish-form textarea::placeholder { color: var(--text-secondary); opacity: 0.6; }
+
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2.5rem;
+    background: linear-gradient(135deg, var(--lavender), var(--mint));
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(196, 181, 224, 0.4);
+  }
+
+  .submit-btn:active { transform: translateY(0); }
+
+  /* Wish Cards Grid */
+  .wishes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .wish-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 1.8rem;
+    box-shadow: 0 2px 15px var(--shadow);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    position: relative;
+  }
+
+  .wish-card.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .wish-card .quote-mark {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--lavender);
+    opacity: 0.3;
+    position: absolute;
+    top: 0.8rem;
+    left: 1.2rem;
+  }
+
+  .wish-card .wish-message {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-top: 1.5rem;
+    word-break: break-word;
+  }
+
+  .wish-card .wish-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--lavender-light);
+  }
+
+  .wish-card .wish-name {
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+  }
+
+  .wish-card .wish-time {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+
+  .wishes-empty {
+    text-align: center;
+    color: var(--text-secondary);
+    font-weight: 300;
+    padding: 3rem 0;
+    font-size: 0.95rem;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 5rem 2rem 3rem;
+    text-align: center;
+    background: linear-gradient(180deg, var(--cream), var(--lavender-light));
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-decoration {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .footer-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .footer-dot:nth-child(1) { background: var(--lavender); animation-delay: 0s; }
+  .footer-dot:nth-child(2) { background: var(--mint); animation-delay: 0.3s; }
+  .footer-dot:nth-child(3) { background: var(--lavender); animation-delay: 0.6s; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  .footer p {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: var(--text-secondary);
+    font-weight: 400;
+    line-height: 2;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .footer .footer-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-top: 2rem;
+    opacity: 0.4;
+    letter-spacing: 0.5em;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 600px) {
+    .form-row { flex-direction: column; }
+    .blessing-card { padding: 1.8rem; }
+    .wish-form { padding: 1.8rem; }
+    .countdown-separator { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating particles background -->
+<div class="particles" id="particles"></div>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-icon">✦ ✦ ✦</div>
+    <h1>小天使即将到来</h1>
+    <p class="subtitle">愿世间所有美好，都如约而至</p>
+    <div class="countdown" id="countdown">
+      <div class="countdown-item">
+        <span class="countdown-number" id="days">--</span>
+        <span class="countdown-label">天</span>
+      </div>
+      <span class="countdown-separator">:</span>
+      <div class="countdown-item">
+        <span class="countdown-number" id="hours">--</span>
+        <span class="countdown-label">时</span>
+      </div>
+      <span class="countdown-separator">:</span>
+      <div class="countdown-item">
+        <span class="countdown-number" id="minutes">--</span>
+        <span class="countdown-label">分</span>
+      </div>
+      <span class="countdown-separator">:</span>
+      <div class="countdown-item">
+        <span class="countdown-number" id="seconds">--</span>
+        <span class="countdown-label">秒</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>向下滚动</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- Blessings Section -->
+<section class="blessings">
+  <h2 class="section-title">送给小天使的祝福</h2>
+  <p class="section-subtitle">每一份爱，都是你生命中最珍贵的礼物</p>
+
+  <div class="blessing-card">
+    <span class="blessing-icon">✦</span>
+    <p class="blessing-text">愿你被这个世界温柔以待，愿你的眼里永远有星辰大海，心中永远有爱与光芒。</p>
+  </div>
+
+  <div class="blessing-card">
+    <span class="blessing-icon">♡</span>
+    <p class="blessing-text">愿你一生平安喜乐，不急不缓地长大，被满满的爱意包围，在温暖中自由绽放。</p>
+  </div>
+
+  <div class="blessing-card">
+    <span class="blessing-icon">✦</span>
+    <p class="blessing-text">愿你有好运气，如果没有，愿你在不幸中学会慈悲；愿你被很多人爱，如果没有，愿你在寂寞中学会宽容。</p>
+  </div>
+
+  <div class="blessing-card">
+    <span class="blessing-icon">♡</span>
+    <p class="blessing-text">愿你的每一天都如诗如画，愿你拥有飞向梦想的翅膀，也有回到温暖港湾的方向。</p>
+  </div>
+
+  <div class="blessing-card">
+    <span class="blessing-icon">✦</span>
+    <p class="blessing-text">亲爱的宝贝，你是父母最美好的期待，是全家最甜蜜的牵挂。愿你健康、快乐，无忧无虑地成长。</p>
+  </div>
+</section>
+
+<!-- Wish Wall Section -->
+<section class="wish-wall">
+  <div class="wish-wall-inner">
+    <h2 class="section-title">祝福墙</h2>
+    <p class="section-subtitle">留下你的祝福，为小天使送上最真挚的心意</p>
+
+    <div class="wish-form">
+      <div class="form-row">
+        <input type="text" id="wishName" placeholder="你的名字" maxlength="20">
+        <input type="text" id="wishRelation" placeholder="你与宝贝的关系" maxlength="20">
+      </div>
+      <textarea id="wishMessage" placeholder="写下你对小天使的祝福..."></textarea>
+      <button class="submit-btn" onclick="submitWish()">送上祝福</button>
+    </div>
+
+    <div class="wishes-grid" id="wishesGrid"></div>
+    <p class="wishes-empty" id="wishesEmpty">还没有祝福，快来成为第一个送祝福的人吧 ~</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-decoration">
+    <span class="footer-dot"></span>
+    <span class="footer-dot"></span>
+    <span class="footer-dot"></span>
+  </div>
+  <p>每个新生命的到来<br>都是世界收到的最美好的礼物</p>
+  <span class="footer-icon">✦ ✦ ✦</span>
+</footer>
+
+<script>
+  // ===== Particles =====
+  (function createParticles() {
+    const container = document.getElementById('particles');
+    const colors = ['#c4b5e0', '#a8d5c2', '#e8e0f3', '#d4ede2'];
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 8 + 4;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      p.style.animationDuration = (Math.random() * 15 + 15) + 's';
+      p.style.animationDelay = (Math.random() * 20) + 's';
+      container.appendChild(p);
+    }
+  })();
+
+  // ===== Countdown =====
+  // Due date: June 8, 2026
+  const dueDate = new Date(2026, 5, 8, 0, 0, 0, 0);
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = dueDate - now;
+
+    if (diff <= 0) {
+      document.getElementById('days').textContent = '0';
+      document.getElementById('hours').textContent = '0';
+      document.getElementById('minutes').textContent = '0';
+      document.getElementById('seconds').textContent = '0';
+      document.querySelector('.hero h1').textContent = '小天使已降临 ✦';
+      document.querySelector('.hero .subtitle').textContent = '欢迎来到这个世界，我们等你好久了';
+      return;
+    }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('days').textContent = d;
+    document.getElementById('hours').textContent = String(h).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ===== Scroll Animations =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.blessing-card, .wish-form, .wish-card').forEach(el => {
+    observer.observe(el);
+  });
+
+  // ===== Wish Wall =====
+  function getWishes() {
+    try {
+      return JSON.parse(localStorage.getItem('baby_wishes') || '[]');
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveWishes(wishes) {
+    localStorage.setItem('baby_wishes', JSON.stringify(wishes));
+  }
+
+  function formatTime(timestamp) {
+    const d = new Date(timestamp);
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+    const hour = String(d.getHours()).padStart(2, '0');
+    const min = String(d.getMinutes()).padStart(2, '0');
+    return month + '月' + day + '日 ' + hour + ':' + min;
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function renderWishes() {
+    const grid = document.getElementById('wishesGrid');
+    const empty = document.getElementById('wishesEmpty');
+    const wishes = getWishes();
+
+    if (wishes.length === 0) {
+      grid.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+
+    empty.style.display = 'none';
+    grid.innerHTML = wishes.slice().reverse().map((w, i) => `
+      <div class="wish-card" style="transition-delay: ${i * 0.1}s">
+        <span class="quote-mark">"</span>
+        <p class="wish-message">${escapeHtml(w.message)}</p>
+        <div class="wish-meta">
+          <span class="wish-name">${escapeHtml(w.name)}${w.relation ? ' · ' + escapeHtml(w.relation) : ''}</span>
+          <span class="wish-time">${formatTime(w.time)}</span>
+        </div>
+      </div>
+    `).join('');
+
+    // Re-observe newly created cards
+    setTimeout(() => {
+      document.querySelectorAll('.wish-card:not(.visible)').forEach(el => {
+        observer.observe(el);
+      });
+    }, 50);
+  }
+
+  function submitWish() {
+    const name = document.getElementById('wishName').value.trim();
+    const relation = document.getElementById('wishRelation').value.trim();
+    const message = document.getElementById('wishMessage').value.trim();
+
+    if (!name) {
+      alert('请输入你的名字');
+      return;
+    }
+    if (!message) {
+      alert('请写下你的祝福');
+      return;
+    }
+
+    const wishes = getWishes();
+    wishes.push({
+      name: name,
+      relation: relation,
+      message: message,
+      time: Date.now()
+    });
+    saveWishes(wishes);
+
+    document.getElementById('wishName').value = '';
+    document.getElementById('wishRelation').value = '';
+    document.getElementById('wishMessage').value = '';
+
+    renderWishes();
+  }
+
+  // Initial render
+  renderWishes();
+</script>
+</body>
+</html>
